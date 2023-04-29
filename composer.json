@@ -1,0 +1,7 @@
+{
+    "require": {
+        "dompdf/dompdf": "^0.8.3",
+        "mikehaertl/php-pdftk": "^0.13.0",
+        "mpdf/mpdf": "*"
+    }
+}
