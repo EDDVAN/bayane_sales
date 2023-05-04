@@ -36,7 +36,7 @@ class SharedController extends BaseController{
      */
 	function co_dossier_client_id_dossier_option_list(){
 		$db = $this->GetModel();
-		$sqltext = "SELECT DISTINCT id_dossier AS value , id_dossier AS label FROM co_vente ORDER BY label ASC";
+		$sqltext = "SELECT DISTINCT d.id_dossier AS value, CONCAT(GROUP_CONCAT(c.cin SEPARATOR '/ '),'_',d.id_dossier) AS label FROM co_dossier_client d join co_client c on d.id_client = c.id_client  where d.etat = 0 group by d.id_dossier ORDER BY label";
 		$queryparams = null;
 		$arr = $db->rawQuery($sqltext, $queryparams);
 		return $arr;
@@ -137,18 +137,6 @@ class SharedController extends BaseController{
 	function co_vente_id_produit_option_list(){
 		$db = $this->GetModel();
 		$sqltext = "SELECT  DISTINCT id_produit AS value,num_produit AS label FROM co_produit";
-		$queryparams = null;
-		$arr = $db->rawQuery($sqltext, $queryparams);
-		return $arr;
-	}
-
-	/**
-     * co_vente_par_option_list Model Action
-     * @return array
-     */
-	function co_vente_par_option_list(){
-		$db = $this->GetModel();
-		$sqltext = "SELECT DISTINCT id AS value , name AS label FROM user ORDER BY label ASC";
 		$queryparams = null;
 		$arr = $db->rawQuery($sqltext, $queryparams);
 		return $arr;

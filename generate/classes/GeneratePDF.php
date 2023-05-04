@@ -17,7 +17,23 @@ class GeneratePDF
       {
 
             try {
-                  $pdf = new Pdf('./new_auth_v2.pdf');
+                  $pdf = new Pdf('./new_auth_v3.pdf');
+                  $pdf->fillForm($data)
+                        ->flatten()
+                        ->saveAs($path);
+                  //->send( $filename . '.pdf');
+
+                  return $path;
+            } catch (Exception $e) {
+                  return $e->getMessage();
+            }
+      }
+
+      public function resume($data, $path)
+      {
+
+            try {
+                  $pdf = new Pdf('./new_resume_v2.pdf');
                   $pdf->fillForm($data)
                         ->flatten()
                         ->saveAs($path);

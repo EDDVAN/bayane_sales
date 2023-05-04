@@ -181,7 +181,6 @@ class Co_venteController extends SecureController{
 				'prix_vente' => 'required|numeric',
 				'notaire' => 'numeric',
 				'accord' => 'numeric',
-				'par' => 'required',
 			);
 			$this->sanitize_array = array(
 				'id_dossier' => 'sanitize_string',
@@ -193,7 +192,6 @@ class Co_venteController extends SecureController{
 				'notaire' => 'sanitize_string',
 				'credit' => 'sanitize_string',
 				'accord' => 'sanitize_string',
-				'par' => 'sanitize_string',
 				'observation' => 'sanitize_string',
 				'attachment' => 'sanitize_string',
 			);
@@ -201,6 +199,7 @@ class Co_venteController extends SecureController{
 			$modeldata = $this->modeldata = $this->validate_form($postdata);
 			$modeldata['statut'] = "provisoire";
 $modeldata['datecre'] = date_now();
+$modeldata['par'] = USER_ID;
 $modeldata['id_adm'] = USER_ID;
 $modeldata['date_adm'] = datetime_now();
 			if($this->validated()){
@@ -381,7 +380,8 @@ $modeldata['date_adm'] = datetime_now();
 			"user.name AS user_name", 
 			"CONCAT('Recetes') AS Recettes", 
 			"co_vente.attachment", 
-			"co_dossier_client.id_client AS co_dossier_client_id_client");
+			"co_dossier_client.id_client AS co_dossier_client_id_client", 
+			"CONCAT(id_vente) AS download");
 		$pagination = $this->get_pagination(MAX_RECORD_COUNT); // get current pagination e.g array(page_number, page_limit)
 		//search table record
 		if(!empty($request->search)){
@@ -409,10 +409,11 @@ $modeldata['date_adm'] = datetime_now();
 				co_dossier_client.id_dossier LIKE ? OR 
 				co_dossier_client.id_client LIKE ? OR 
 				co_dossier_client.part_client LIKE ? OR 
-				co_dossier_client.etat LIKE ?
+				co_dossier_client.etat LIKE ? OR 
+				co_vente.download LIKE ?
 			)";
 			$search_params = array(
-				"%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%"
+				"%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%"
 			);
 			//setting search conditions
 			$db->where($search_condition, $search_params);
@@ -477,7 +478,8 @@ $modeldata['date_adm'] = datetime_now();
 			"user.name AS user_name", 
 			"co_vente.dateliv", 
 			"CONCAT('Recettes') AS Recettes", 
-			"co_vente.attachment");
+			"co_vente.attachment", 
+			"CONCAT(id_vente) AS download");
 		$pagination = $this->get_pagination(MAX_RECORD_COUNT); // get current pagination e.g array(page_number, page_limit)
 		//search table record
 		if(!empty($request->search)){
@@ -501,10 +503,11 @@ $modeldata['date_adm'] = datetime_now();
 				co_vente.observation LIKE ? OR 
 				co_vente.dateliv LIKE ? OR 
 				CONCAT('Recettes') LIKE ? OR 
-				co_vente.attachment LIKE ?
+				co_vente.attachment LIKE ? OR 
+				CONCAT(id_vente) LIKE ?
 			)";
 			$search_params = array(
-				"%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%"
+				"%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%","%$text%"
 			);
 			//setting search conditions
 			$db->where($search_condition, $search_params);

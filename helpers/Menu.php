@@ -142,12 +142,12 @@ class Menu{
 		
 			public static $credit = array(
 		array(
-			"value" => "1", 
-			"label" => "Oui", 
-		),
-		array(
 			"value" => "0", 
 			"label" => "Non", 
+		),
+		array(
+			"value" => "1", 
+			"label" => "Oui", 
 		),);
 		
 }

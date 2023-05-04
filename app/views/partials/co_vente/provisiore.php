@@ -136,6 +136,7 @@ $show_pagination = $this->show_pagination;
                                                 </th>
                                                 <th  class="td-Recettes"> Recettes</th>
                                                 <th  class="td-attachment"> Attachment</th>
+                                                <th  class="td-download"> Download</th>
                                             </tr>
                                         </thead>
                                         <?php
@@ -218,6 +219,7 @@ $show_pagination = $this->show_pagination;
                                                         ?><span>No Attachment</span><?php
                                                         }
                                                     ?></td>
+                                                    <td class="td-download"><a class="btn btn btn-primary my-1" href="generate?id_vente=<?php echo $data['id_vente']?>&user=<?php echo USER_ID; ?>"><i class="material-icons ">file_download</i>Download</a></td>
                                                 </tr>
                                                 <?php 
                                                 }
